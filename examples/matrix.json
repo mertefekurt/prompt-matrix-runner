@@ -1,0 +1,8 @@
+{
+  "template": "Classify {ticket} for a {customer} customer.",
+  "variables": {
+    "ticket": ["refund request", "service outage"],
+    "customer": ["trial", "enterprise"]
+  },
+  "expect": [{"contains": "Classify"}, {"missing": "{ticket}"}]
+}
