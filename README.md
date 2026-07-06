@@ -1,40 +1,38 @@
-# prompt-matrix-runner
+# Prompt Matrix Runner
 
-<p><img src="assets/banner.svg" alt="prompt-matrix-runner banner"></p>
+![Prompt Matrix Runner cover](assets/readme-cover.svg)
 
-Prompt templates fail quietly when one variable combination was never tried. `prompt-matrix-runner` expands a
-JSON manifest into every prompt variant and checks lightweight expectations without calling a model.
+![stack](https://img.shields.io/badge/stack-Python-4b5563?style=flat-square) ![python](https://img.shields.io/badge/python-3.11-2563eb?style=flat-square) ![license](https://img.shields.io/badge/license-MIT-16a34a?style=flat-square) ![ci](https://img.shields.io/badge/ci-GitHub%20Actions-dc2626?style=flat-square)
 
-## Manifest
+> Expand prompt templates into deterministic test matrices
 
-```json
-{
-  "template": "Classify {ticket} for a {customer} customer.",
-  "variables": {
-    "ticket": ["refund request", "service outage"],
-    "customer": ["trial", "enterprise"]
-  },
-  "expect": [{"contains": "Classify"}, {"missing": "{ticket}"}]
-}
-```
+## How I use it
 
-## Command
+The project stays focused on one job: take a small input, produce a clear result, and avoid adding a heavy service around a problem that fits in a command line.
+
+## Quick start
 
 ```bash
-prompt-matrix-runner examples/matrix.json --preview
-prompt-matrix-runner examples/matrix.json --json
+python -m pip install -e ".[dev]"
+prompt-matrix-runner examples/matrix.json
 ```
 
-## What it catches
+## What is inside
 
-- templates that reference variables not present in the manifest
-- rendered prompts that still contain braces
-- expected safety or routing phrases missing from variants
-- variant counts that are larger than expected before an eval run
+```text
+.github/        CI workflow
+examples/       sample inputs
+src/            package source
+tests/          test coverage
+.gitignore      project file
+pyproject.toml  package metadata
+```
 
-## Development notes
+## Development
 
-No model key, no network, no external runtime. Tests cover expansion, validation, preview rendering, JSON
-output, and CLI help.
-
-MIT.
+```bash
+python -m pip install -e ".[dev]"
+ruff check .
+pytest
+python -m prompt_matrix_runner --help
+```
